@@ -1,19 +1,13 @@
-import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import { Button } from './components/ui/button';
+import Navbar from './components/layout/Navbar';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <Button>Shadcn Button</Button>
-      </div>
-    </>
+    <div>
+      <Navbar />
+      <Outlet />
+    </div>
   );
 }
 
