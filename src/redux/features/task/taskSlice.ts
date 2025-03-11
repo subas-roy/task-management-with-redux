@@ -1,7 +1,12 @@
+import { ITask } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 
+interface InitialState {
+  task: ITask[];
+}
+
 // Schema
-const initialState = {
+const initialState: InitialState = {
   task: [
     {
       id: 'asdfjklmn',
