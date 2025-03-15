@@ -16,9 +16,9 @@ const Tasks = () => {
         <h1>Tasks</h1>
       </div>
       <div className="space-y-5 mt-5">
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
+        {tasks.map((task) => (
+          <TaskCard />
+        ))}
       </div>
     </div>
   );
