@@ -24,7 +24,7 @@ const initialState: InitialState = {
       description: 'Create Home page and routing',
       dueDate: '2025-3',
       isCompleted: false,
-      priority: 'High',
+      priority: 'Medium',
     },
   ],
   filter: 'all',
