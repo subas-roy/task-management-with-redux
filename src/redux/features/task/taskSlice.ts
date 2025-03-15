@@ -18,6 +18,14 @@ const initialState: InitialState = {
       isCompleted: false,
       priority: 'High',
     },
+    {
+      id: 'asdfjklmn',
+      title: 'Initial frontend',
+      description: 'Create Home page and routing',
+      dueDate: '2025-3',
+      isCompleted: false,
+      priority: 'High',
+    },
   ],
   filter: 'all',
 };
