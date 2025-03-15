@@ -1,16 +1,25 @@
-import { selectFilter, selectTasks } from '@/redux/features/task/taskSlice';
+import { selectTasks } from '@/redux/features/task/taskSlice';
 import { useAppSelector } from '@/redux/hook';
+import { Button } from '../ui/button';
+import { Trash } from 'lucide-react';
+import { Checkbox } from '../ui/checkbox';
+import TaskCard from '../module/tasks/taskCard';
 
 const Tasks = () => {
   const tasks = useAppSelector(selectTasks);
-  const filter = useAppSelector(selectFilter);
 
   console.log(tasks);
-  console.log(filter);
 
   return (
-    <div>
-      <h1>This is tasks component</h1>
+    <div className="mx-auto max-w-7xl px-5 mt-20">
+      <div>
+        <h1>Tasks</h1>
+      </div>
+      <div className="space-y-5 mt-5">
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+      </div>
     </div>
   );
 };
