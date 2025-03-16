@@ -9,31 +9,18 @@ interface InitialState {
 
 // Schema
 const initialState: InitialState = {
-  tasks: [
-    {
-      id: 'asdfjklmn',
-      title: 'Initial frontend',
-      description: 'Create Home page and routing',
-      dueDate: '2025-3',
-      isCompleted: false,
-      priority: 'High',
-    },
-    {
-      id: 'asdfjklmm',
-      title: 'Initial frontend',
-      description: 'Create Home page and routing',
-      dueDate: '2025-3',
-      isCompleted: false,
-      priority: 'Medium',
-    },
-  ],
+  tasks: [],
   filter: 'all',
 };
 
 const taskSlice = createSlice({
   name: 'task',
   initialState,
-  reducers: {},
+  reducers: {
+    addTask: (state, action) => {
+      state.tasks.push(action.payload);
+    },
+  },
 });
 
 export const selectTasks = (state: RootState) => {
@@ -43,5 +30,7 @@ export const selectTasks = (state: RootState) => {
 export const selectFilter = (state: RootState) => {
   return state.todo.filter;
 };
+
+export const { addTask } = taskSlice.actions;
 
 export default taskSlice.reducer;
