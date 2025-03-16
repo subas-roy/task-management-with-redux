@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -25,7 +31,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 import { Description } from '@radix-ui/react-dialog';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 const AddTaskModal = () => {
   const form = useForm();
@@ -74,12 +83,33 @@ const AddTaskModal = () => {
             />
             <FormField
               control={form.control}
-              name="dueDate"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Due Date</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select email" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Emails</SelectLabel>
+                          <SelectItem value="abul@gmail.com">
+                            abul@gmail.com
+                          </SelectItem>
+                          <SelectItem value="babul@gmail.com">
+                            babul@gmail.com
+                          </SelectItem>
+                          <SelectItem value="kbul@gmail.com">
+                            kbul@gmail.com
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                 </FormItem>
               )}
@@ -91,16 +121,19 @@ const AddTaskModal = () => {
                 <FormItem>
                   <FormLabel>Priority</FormLabel>
                   <FormControl>
-                    <Select>
-                      <SelectTrigger className="w-[180px]">
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select priority" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Priorities</SelectLabel>
-                          <SelectItem value="apple">High</SelectItem>
-                          <SelectItem value="banana">Medium</SelectItem>
-                          <SelectItem value="blueberry">low</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="low">low</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -108,6 +141,47 @@ const AddTaskModal = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="dueDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Due Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'w-full pl-3 text-left font-normal',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, 'PPP')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date('1900-01-01')
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+
             <Button type="submit">Save changes</Button>
           </form>
         </Form>
