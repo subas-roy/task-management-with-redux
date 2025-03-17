@@ -1,6 +1,7 @@
 import { RootState } from '@/redux/store';
 import { ITask } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 interface InitialState {
   tasks: ITask[];
@@ -19,7 +20,7 @@ const taskSlice = createSlice({
   reducers: {
     addTask: (state, action: PayloadAction<ITask>) => {
       // Add business logic / modify action.payload / add custom properties in action.payload object / business logic in reducer level
-      const id = '123456';
+      const id = uuidv4();
       // ... add more
 
       // Modified data

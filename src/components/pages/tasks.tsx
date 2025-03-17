@@ -1,8 +1,5 @@
 import { selectTasks } from '@/redux/features/task/taskSlice';
 import { useAppSelector } from '@/redux/hook';
-import { Button } from '../ui/button';
-import { Trash } from 'lucide-react';
-import { Checkbox } from '../ui/checkbox';
 import TaskCard from '../module/tasks/TaskCard';
 import AddTaskModal from '../module/tasks/AddTaskModal';
 
