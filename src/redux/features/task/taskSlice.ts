@@ -15,7 +15,16 @@ const createTask = (taskData: DraftTask): ITask => {
 
 // Schema
 const initialState: InitialState = {
-  tasks: [],
+  tasks: [
+    {
+      id: 'rJFErexdeoCb0t7rTVyml',
+      isCompleted: false,
+      title: 'Create github repository',
+      description: 'Lorem ipsum dolor sit amet',
+      priority: 'high',
+      dueDate: '2025-03-16T18:00:00.000Z',
+    },
+  ],
   filter: 'all',
 };
 
@@ -26,6 +35,14 @@ const taskSlice = createSlice({
     addTask: (state, action: PayloadAction<ITask>) => {
       const taskData = createTask(action.payload);
       state.tasks.push(taskData);
+    },
+
+    toggleCompleteState: (state, action: PayloadAction<string>) => {
+      state.tasks.forEach((task) =>
+        task.id == action.payload
+          ? (task.isCompleted = !task.isCompleted)
+          : task
+      );
     },
   },
 });
@@ -39,5 +56,7 @@ export const selectFilter = (state: RootState) => {
 };
 
 export const { addTask } = taskSlice.actions;
+
+export const { toggleCompleteState } = taskSlice.actions;
 
 export default taskSlice.reducer;
