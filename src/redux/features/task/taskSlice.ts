@@ -1,12 +1,17 @@
 import { RootState } from '@/redux/store';
 import { ITask } from '@/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 interface InitialState {
   tasks: ITask[];
   filter: 'all' | 'high' | 'low';
 }
+
+type DraftTask = Pick<ITask, 'title' | 'description' | 'dueDate' | 'priority'>;
+
+const createTask = (taskData: DraftTask): ITask => {
+  return { id: nanoid(), isCompleted: false, ...taskData };
+};
 
 // Schema
 const initialState: InitialState = {
@@ -19,17 +24,7 @@ const taskSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action: PayloadAction<ITask>) => {
-      // Add business logic / modify action.payload / add custom properties in action.payload object / business logic in reducer level
-      const id = uuidv4();
-      // ... add more
-
-      // Modified data
-      const taskData = {
-        ...action.payload,
-        id,
-        isCompleted: false,
-      };
-
+      const taskData = createTask(action.payload);
       state.tasks.push(taskData);
     },
   },
