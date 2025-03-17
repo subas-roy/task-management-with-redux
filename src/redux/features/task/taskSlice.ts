@@ -18,7 +18,18 @@ const taskSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action: PayloadAction<ITask>) => {
-      state.tasks.push(action.payload);
+      // Add business logic / modify action.payload / add custom properties in action.payload object / business logic in reducer level
+      const id = '123456';
+      // ... add more
+
+      // Modified data
+      const taskData = {
+        ...action.payload,
+        id,
+        isCompleted: false,
+      };
+
+      state.tasks.push(taskData);
     },
   },
 });
