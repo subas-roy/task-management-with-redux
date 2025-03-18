@@ -26,7 +26,9 @@ const TaskCard = ({ task }: IProps) => {
               'bg-green-500': task.priority == 'low',
             })}
           ></div>
-          <h1>{task.title}</h1>
+          <h1 className={cn({ 'line-through': task.isCompleted })}>
+            {task.title}
+          </h1>
         </div>
         <div className="flex gap-3 items-center">
           <Button
@@ -36,7 +38,10 @@ const TaskCard = ({ task }: IProps) => {
           >
             <Trash />
           </Button>
-          <Checkbox onClick={() => dispatch(toggleCompleteState(task.id))} />
+          <Checkbox
+            checked={task.isCompleted}
+            onClick={() => dispatch(toggleCompleteState(task.id))}
+          />
         </div>
       </div>
       <p className="mt-5">{task.description}</p>
