@@ -7,7 +7,10 @@ interface InitialState {
   filter: 'high' | 'medium' | 'low' | 'all';
 }
 
-type DraftTask = Pick<ITask, 'title' | 'description' | 'dueDate' | 'priority'>;
+type DraftTask = Pick<
+  ITask,
+  'title' | 'description' | 'dueDate' | 'priority' | 'assignedTo'
+>;
 
 const createTask = (taskData: DraftTask): ITask => {
   return { id: nanoid(), isCompleted: false, ...taskData };
@@ -23,6 +26,7 @@ const initialState: InitialState = {
       description: 'Lorem ipsum dolor sit amet',
       priority: 'high',
       dueDate: '2025-03-16T18:00:00.000Z',
+      assignedTo: 'Mezba',
     },
   ],
   filter: 'all',
