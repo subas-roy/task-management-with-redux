@@ -39,8 +39,10 @@ import { ITask } from '@/types';
 import { Description } from '@radix-ui/react-dialog';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
+import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 const AddTaskModal = () => {
+  const [open, setOpen] = useState(false);
   const users = useAppSelector(selectUsers);
   const form = useForm();
 
@@ -49,10 +51,12 @@ const AddTaskModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     // type assertion
     dispatch(addTask(data as ITask));
+    setOpen(false); // close the modal
+    form.reset(); // reset the form
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add Task</Button>
       </DialogTrigger>
