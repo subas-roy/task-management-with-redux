@@ -33,13 +33,15 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { addTask } from '@/redux/features/task/taskSlice';
-import { useAppDispatch } from '@/redux/hook';
+import { selectUsers } from '@/redux/features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { ITask } from '@/types';
 import { Description } from '@radix-ui/react-dialog';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 const AddTaskModal = () => {
+  const users = useAppSelector(selectUsers);
   const form = useForm();
 
   const dispatch = useAppDispatch();
@@ -140,6 +142,33 @@ const AddTaskModal = () => {
                           <SelectItem value="high">High</SelectItem>
                           <SelectItem value="medium">Medium</SelectItem>
                           <SelectItem value="low">low</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="assignedTo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Assigned To</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Priorities</SelectLabel>
+                          {users.map((user) => (
+                            <SelectItem value={user.id}>{user.name}</SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
